@@ -42,14 +42,14 @@
 
 			// set default vao 
 			gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-			let positionLocation = gl.getAttribLocation(program, 'a_position');
+			let positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
 			const size = 2;
 			const type = gl.FLOAT;
 			const normalize = false;
 			const stride = 0;
 			const offset = 0;
-			gl.enableVertexAttribArray(positionLocation);
-			gl.vertexAttribPointer(positionBuffer, size, type, normalize, stride, offset);
+			gl.enableVertexAttribArray(positionAttributeLocation);
+			gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
 
 			// prepare canvas
 			gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
