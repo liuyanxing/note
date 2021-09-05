@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+	<script src="./util/index.js"></script>
+	<script id="vertex-shader-2d" type="notjs">
+	
+		}
+	</script>
+	<!-- fragment shader -->
+	<script id="fragment-shader-2d" type="notjs">
+		precision mediump float;
+
+		void main() {
+			gl_FragColor = vec4(1, 0, 0.5, 1); // return redish-purple
+		}
+	</script>
+	<canvas id="c" width="800" height="600"></canvas>
+	<script>
+		function main() {
+			var canvas = document.querySelector("#c");
+			var gl = canvas.getContext("webgl");
+			if (!gl) {
+				return;
+			}
+
+			var program = webglUtils.createProgramFromScripts(gl, ["vertex-shader-2d", "fragment-shader-2d"]);
+		}
+
+		main();
+
+	</script>
+	<style>
+		body {
+			width: 100vw;
+			height: 100vh;
+			padding: 20px;
+		}
+
+		canvas {
+			width: 400px;
+			height: 300px;
+		}
+	</style>
+</body>
+
+</html>
