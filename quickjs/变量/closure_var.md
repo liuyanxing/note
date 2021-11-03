@@ -1,0 +1,6 @@
+Closure_var
+
+闭包变量在resolve_scope_var函数中处理，先通过作用域向上查找变量，找到以后通过get_closure_var添加到
+
+函数的closure_vars中
+
