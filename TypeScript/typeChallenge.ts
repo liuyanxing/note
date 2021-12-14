@@ -23,7 +23,11 @@ type C = Exclude<ABC, AB>;
 // 子集判断 A extends B ? A是否是B的子集, 如果A是集合，那么就会对A的每个元素进行extends操作
 type Subset<T, U> = (U extends T ? true : false) extends true ? true : false;
 type S = Subset<ABC, AB>; 
-type NS = Subset<ABC, BCD>; 
+type NS = Subset<ABC, BCD>;
+
+type MyPick<T, U extends keyof T> = { [ P in U ]: T[P] };
+type MyReadOnly<T> = { readonly [P in keyof T]: T[P] }
+type TypeToObject<T extends any[]> = { [P in T[number]]: T[P]}
 
 
 type MyReadOnly2<T, U extends keyof T> = T & { readonly [p in U]: T[p] };
@@ -55,3 +59,11 @@ interface Dog {
 type LookUp<T, K> = T extends { 'type': K } ? T : never;
 
 type PickByType<T, K> = { [ p in keyof T as K extends T[p] ? p : never]: T[p] };
+
+type GreatetThan<T extends number, K extends number, U extends any[] = []> = U['length'] extends T ? false :  U['length'] extends K ? true : GreatetThan<T, K, [1, ...U]>;
+
+type G = GreatetThan<1, 2>;
+
+type BuildArray<T extends number, K extends any[] = []> = K['length'] extends T ? K : BuildArray<T, [1, ...K]>;
+type Sum<T extends number, K extends number> = [...BuildArray<T>, ...BuildArray<K>]['length'];
+type Su = Sum<1, 2>;
