@@ -83,7 +83,9 @@
 		const image = new Image();
 		image.src = './assets/leaves.jpeg';
 		image.onload = () => {
-			renderImage(image);
+		  setTimeout(() => {
+				renderImage(image);
+			}, 2000);
 		}
 	</script>
 	<style>
