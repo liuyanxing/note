@@ -1,10 +1,6 @@
 @startuml creatProgram
-:Hello world;
-:This is on defined on
-several **lines**;
-if (cond1?) then (val1)
-	
-else (val2)
-	
-endif
+:createProgram;
+:初始化programBuilder;
+:builder.emitAndInstallProcs;
+:builder.finalize;
 @enduml

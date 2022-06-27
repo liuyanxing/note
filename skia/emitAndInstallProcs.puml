@@ -1,0 +1,28 @@
+@startuml emitAndInstallProcs
+:GrGLSLProgramBuilder.emitAndInstallProcs;
+:dsl:Start (unkonwn);
+:declare inputColor和inputCoverage;
+split
+	:call emitAndInstallPrimProc;
+	:fStageIndex++;
+	:设置outputColor和outputCoverage的值;
+	:add fRTAdjustment uniform;
+	:在framgent和vertext shader中
+	添加geometryProcessor名字和fStageIndex的注释信息fRTAdjustment;
+	:获取programImpl, 并调用emitCode生成shader代码;
+kill
+split again
+	:call emitAndInstallDstTexture;
+kill
+split again
+
+:call emitAndInstallFragProcs;
+
+kill
+split again
+	:call emitAndInstallXferProc;
+kill
+end split
+:hello;
+:world;
+@enduml
