@@ -1,0 +1,18 @@
+@startuml flushAndSubmit
+:SkSurface::flushAndSubmit;
+:SkSurface_Gpu::onFlush;
+:GrDrawingManager::flushSurfaces;
+:GrDrawingManager::flush;
+:preFlush;
+:GrDrawingManager::executeRenderTasks;
+:遍历renderTask，执行每个renderTask的prepare;
+:flushState->preExecuteDraws();
+:执行onFlushRenderTasks;
+:遍历renderTask，执行每个renderTask的execute;
+split
+	
+split again
+  :遍历renderTask的fOpChains, 执行每个op;
+end split
+:flushState->reset();
+@enduml
