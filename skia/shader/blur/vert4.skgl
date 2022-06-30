@@ -1,0 +1,9 @@
+uniform float4 sk_RTAdjust;
+in float2 position;
+in float2 localCoord;
+noperspective out float2 vlocalCoord_S0;
+void main() {
+	// Primitive Processor QuadPerEdgeAAGeometryProcessor
+	vlocalCoord_S0 = localCoord;
+	sk_Position = position.xy01;
+}

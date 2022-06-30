@@ -1,0 +1,33 @@
+uniform float4 uclamp_S1_c0;
+uniform float3x3 umatrix_S1;
+uniform sampler2D uTextureSampler_0_S1;
+
+noperspective in float2 vTransformedCoords_2_S0;
+out half4 sk_FragColor;
+
+half4 TextureEffect_S1_c0(half4 _input) {
+	float2 inCoord = vTransformedCoords_2_S0;
+	float2 subsetCoord;
+	subsetCoord.x = inCoord.x;
+	subsetCoord.y = inCoord.y;
+	float2 clampedCoord;
+	clampedCoord = clamp(subsetCoord, uclamp_S1_c0.xy, uclamp_S1_c0.zw);
+	half4 textureColor = sample(uTextureSampler_0_S1, clampedCoord);
+	return textureColor;
+}
+
+half4 MatrixEffect_S1(half4 _input) {
+	return TextureEffect_S1_c0(_input);
+}
+
+void main() {
+	// Stage 0, QuadPerEdgeAAGeometryProcessor
+	half4 outputColor_S0 = half4(1);
+	const half4 outputCoverage_S0 = half4(1);
+	half4 output_S1;
+	output_S1 = MatrixEffect_S1(outputColor_S0);
+	{
+		// Xfer Processor: Porter Duff
+		sk_FragColor = output_S1 * outputCoverage_S0;
+	}
+}

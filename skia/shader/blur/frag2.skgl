@@ -1,0 +1,56 @@
+uniform half4 uborder_S1_c0_c0_c0;
+uniform float4 usubset_S1_c0_c0_c0;
+uniform float4unifor;
+ uclamp_S1_c0_c0_c0;
+uniform float2 uidims_S1_c0_c0_c0;
+uniform float3x3 umatrix_S1_c0_c0;
+uniform half2 u_0_Increment_S1_c0;
+uniform half4 u_1_Kernel_S1_c0[4];
+uniform half4 u_2_Offsets_S1_c0[4];
+uniform float3x3 umatrix_S1;
+uniform sampler2D uTextureSampler_0_S1;
+
+noperspective in float2 vTransformedCoords_2_S0;
+out half4 sk_FragColor;
+
+half4 TextureEffect_S1_c0_c0_c0(half4 _input, float2 _coords) {
+	float2 inCoord = _coords;
+	float2 subsetCoord;
+	subsetCoord.x = inCoord.x;
+	subsetCoord.y = inCoord.y;
+	float2 clampedCoord;
+	clampedCoord.x = subsetCoord.x;
+	clampedCoord.y = clamp(subsetCoord.y, uclamp_S1_c0_c0_c0.y, uclamp_S1_c0_c0_c0.w);
+	half4 textureColor = sample(uTextureSampler_0_S1, (clampedCoord) * uidims_S1_c0_c0_c0);
+	half errY = half(subsetCoord.y - clampedCoord.y);
+	textureColor = mix(textureColor, uborder_S1_c0_c0_c0, min(abs(errY), 1));
+	return textureColor;
+}
+
+half4 MatrixEffect_S1_c0_c0(half4 _input, float2 _coords) {
+	return TextureEffect_S1_c0_c0_c0(_input, float3x2(umatrix_S1_c0_c0) * _coords.xy1);
+}
+
+half4 GaussianConvolution_S1_c0(half4 _input) {
+	half4 _3_color = half4(0.0);
+	float2 _5_coord = vTransformedCoords_2_S0;
+	for (int _6_i = 0; (_6_i < 13); _6_i++)
+		(_3_color += (MatrixEffect_S1_c0_c0(_input, (_5_coord + float2((u_2_Offsets_S1_c0[(_6_i / 4)][(_6_i & 3)] * u_0_Increment_S1_c0)))) * u_1_Kernel_S1_c0[(_6_i / 4)][(_6_i & 3)]));
+	return _3_color;
+}
+
+half4 MatrixEffect_S1(half4 _input) {
+	return GaussianConvolution_S1_c0(_input);
+}
+
+void main() {
+	// Stage 0, QuadPerEdgeAAGeometryProcessor
+	half4 outputColor_S0 = half4(1);
+	const half4 outputCoverage_S0 = half4(1);
+	half4 output_S1;
+	output_S1 = MatrixEffect_S1(outputColor_S0);
+	{
+		// Xfer Processor: Porter Duff
+		sk_FragColor = output_S1 * outputCoverage_S0;
+	}
+}

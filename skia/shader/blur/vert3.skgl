@@ -1,0 +1,12 @@
+uniform float4 sk_RTAdjust;
+uniform float3x3 umatrix_S1;
+in float2 position;
+in float2 localCoord;
+noperspective out float2 vTransformedCoords_2_S0;
+void main() {
+	// Primitive Processor QuadPerEdgeAAGeometryProcessor
+	sk_Position = position.xy01;
+	{
+		vTransformedCoords_2_S0 = float3x2(umatrix_S1) * localCoord.xy1;
+	}
+}

@@ -1,0 +1,17 @@
+uniform sampler2D uTextureSampler_0_S0;
+
+noperspective in float2 vlocalCoord_S0;
+out half4 sk_FragColor;
+
+void main() {
+	// Stage 0, QuadPerEdgeAAGeometryProcessor
+	half4 outputColor_S0 = half4(1);
+	float2 texCoord;
+	texCoord = vlocalCoord_S0;
+	outputColor_S0 = ((sample(uTextureSampler_0_S0, texCoord) * half4(1)));
+	const half4 outputCoverage_S0 = half4(1);
+	{
+		// Xfer Processor: Porter Duff
+		sk_FragColor = outputColor_S0 * outputCoverage_S0;
+	}
+}
