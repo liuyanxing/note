@@ -1,0 +1,33 @@
+
+@startuml emitAndInstallProcs
+class OpsTask {
+	+addOp()
+	+addDrawOp()
+	+canMerge()
+	+mergeFrom()
+	-fOpChains: OpChain[]
+}
+
+OpsTask *- OpChain
+
+class GrRenderTask {
+	prePrePare()
+	prepare()
+	execute()
+	#ftarget: GrSurfaceProxy[]
+	#addTarget()
+}
+
+class OpChain {
+	+head()
+	+appendOp()
+	+prependChain()
+	-fList: List<GrOP>
+}
+
+class GrOP {
+	+execute()
+}
+
+OpsTask --|> GrRenderTask
+@enduml
