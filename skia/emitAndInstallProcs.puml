@@ -16,6 +16,15 @@ split again
 kill
 split again
 	:call emitAndInstallFragProcs;
+	:通过pipline获取所有的fragmentProcessor
+	:对每个fp调用emitRootFragProc
+	:call fp.visitWithImpls
+	:call writeFPFunction(fp, impl)生成fp对应的函数
+	:声明fp的函数参数
+	:call writeChildFPFunction(fp, impl)
+	:遍历fp的childProcessor，对每个childProcessor执行writeFPFunction
+	:impl.emitCode
+	:fFS.emitFunction
 kill
 split again
 	:call emitAndInstallXferProc;
