@@ -15,9 +15,7 @@ split again
 	:call emitAndInstallDstTexture;
 kill
 split again
-
-:call emitAndInstallFragProcs;
-
+	:call emitAndInstallFragProcs;
 kill
 split again
 	:call emitAndInstallXferProc;
