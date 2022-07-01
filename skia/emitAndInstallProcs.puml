@@ -10,25 +10,21 @@ split
 	:在framgent和vertext shader中
 	添加geometryProcessor名字和fStageIndex的注释信息fRTAdjustment;
 	:获取programImpl, 并调用emitCode生成shader代码;
-kill
 split again
 	:call emitAndInstallDstTexture;
-kill
 split again
 	:call emitAndInstallFragProcs;
-	:通过pipline获取所有的fragmentProcessor
-	:对每个fp调用emitRootFragProc
-	:call fp.visitWithImpls
-	:call writeFPFunction(fp, impl)生成fp对应的函数
-	:声明fp的函数参数
-	:call writeChildFPFunction(fp, impl)
-	:遍历fp的childProcessor，对每个childProcessor执行writeFPFunction
-	:impl.emitCode
-	:fFS.emitFunction
-kill
+	:通过pipline获取所有的fragmentProcessor;
+	:对每个fp调用emitRootFragProc;
+	:call fp.visitWithImpls;
+	:call writeFPFunction(fp, impl)生成fp对应的函数;
+	:声明fp的函数参数;
+	:call writeChildFPFunction(fp, impl);
+	:遍历fp的childProcessor，对每个childProcessor执行writeFPFunction;
+	:impl.emitCode;
+	:fFS.emitFunction;
 split again
 	:call emitAndInstallXferProc;
-kill
 end split
 :hello;
 :world;
