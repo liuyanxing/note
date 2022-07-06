@@ -25,9 +25,17 @@ class OpChain {
 	-fList: List<GrOP>
 }
 
-class GrOP {
+class GrOp {
+	-fNextInChain
+	-fPrevInChain
+	+prePrePare()
+	+prepare()
 	+execute()
+	+nextInChain()
+	+prevInChain()
 }
+
+OpChain *- GrOp
 
 OpsTask --|> GrRenderTask
 @enduml
