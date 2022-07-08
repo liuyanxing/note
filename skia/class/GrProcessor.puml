@@ -1,0 +1,79 @@
+@startuml GrProcessor
+	class GrProcessor {
+		+ClassID()
+	}
+
+	class GrGeometryProcessor {
+		+GrGeometryProcess(ClassID)
+		-fVertexAttributes: AttributeSet
+		-fInstanceAtrributes: AttributeSet
+		-fTextureSamplerCnt: int
+	}
+
+	class Attribute {
+		-fName: char*
+		-fCPUType: GrVertexAttibType
+		-fGPUType: SkSLType
+		-fOffset: unin32_ty
+	}
+
+	class AttributeSet {
+		class Iter
+		-fAttributes: Attribute*
+		-fRawCount: int
+		-fCount: int
+		-fStride: size_t
+	}
+
+	class QuadPerEdgeAAGeometryProcessor {
+		+name(): char*
+		+addToKey()
+		+makeProgramImpl(): ProgramImpl 
+		-fPosition: Attribute
+		-fCoverage: Attribute
+		-fColor: Attribute
+		-fLocalCoord: Attribute
+		-fGeoSubset: Attribute
+		-fTexSubset: Attribute
+		-fSaturate: Saturate
+		-fCoverageMode: CoverageMode
+		-fSampler: TextureSampler
+	}
+
+	class TextureSampler {
+		fSamplerState: GrSamplerState
+		fBackendFormat: GrBackendFormat
+		fSwizzle: Swizzle
+		fIsInitialized: bool
+	}
+
+	class GrSamplerState {
+		fWrapModes: WrapMode[]
+		fFilter: Filter
+		fMipmapMode: MipmapMode
+		fMaxAniso: int
+	}
+
+	enum WrapMode {
+		kClamp
+		kRepeat
+		kMirrorRepeat
+		kClampToBorder
+	}
+
+	enum SkFilterMode {
+		kNearest
+		kLinear
+	}
+
+	enum SkMipmapMode {
+		KNone
+		kNearest
+		kLinear
+	}
+
+	class Swizzle {
+		+applyTo(std::array<float, 4> color): std::array<float, 4> // 颜色rgba顺序交换
+		-fKey: uint16_t
+	}
+@enduml
