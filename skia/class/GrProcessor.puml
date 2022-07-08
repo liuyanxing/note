@@ -10,6 +10,8 @@
 		-fTextureSamplerCnt: int
 	}
 
+	GrGeometryProcessor --|> GrProcessor
+
 	class Attribute {
 		-fName: char*
 		-fCPUType: GrVertexAttibType
@@ -24,6 +26,8 @@
 		-fCount: int
 		-fStride: size_t
 	}
+
+	AttributeSet -* Attribute
 
 	class QuadPerEdgeAAGeometryProcessor {
 		+name(): char*
@@ -40,6 +44,10 @@
 		-fSampler: TextureSampler
 	}
 
+	QuadPerEdgeAAGeometryProcessor --|> GrGeometryProcessor
+	QuadPerEdgeAAGeometryProcessor -* TextureSampler
+	QuadPerEdgeAAGeometryProcessor -* Attribute
+
 	class TextureSampler {
 		fSamplerState: GrSamplerState
 		fBackendFormat: GrBackendFormat
@@ -49,10 +57,17 @@
 
 	class GrSamplerState {
 		fWrapModes: WrapMode[]
-		fFilter: Filter
-		fMipmapMode: MipmapMode
+		fFilter: SkFilterMode
+		fMipmapMode: SkMipmapMode
 		fMaxAniso: int
 	}
+
+	TextureSampler -* GrSamplerState
+	TextureSampler -* Swizzle
+
+	GrSamplerState -* WrapMode
+	GrSamplerState -* SkFilterMode
+	GrSamplerState -* SkMipmapMode
 
 	enum WrapMode {
 		kClamp
